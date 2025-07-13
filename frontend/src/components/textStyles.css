@@ -1,0 +1,78 @@
+/* src/components/textStyles.css */
+
+.text-primary {
+    text-align: left;
+    color: white;
+    font-family: 'Century Gothic'; 
+    font-weight: 400;      
+    font-size: 1rem;    
+    letter-spacing: 0.03em; 
+}
+
+.text-header-login {
+    text-align: center;
+    color: white;
+    font-family: 'Century Gothic'; 
+    font-weight: 400;      
+    font-size: 1.125rem;    
+    letter-spacing: 0.03em; 
+
+}
+
+
+.text-secondary {
+    text-align: left;
+    color: #204958;
+    font-family: 'Century Gothic'; 
+    font-weight: 600;      
+    font-size: 1rem;    
+    letter-spacing: 0.03em; 
+ 
+}
+
+
+.text-heading-md {
+    text-align: left;
+    color: white;
+    font-family: 'Century Gothic'; 
+    font-weight: 400;      
+    font-size: 1.1rem;    
+    letter-spacing: 0.03em; 
+    
+
+}
+
+.text-button{
+    text-align: left;
+    color: white;
+    font-family: 'Century Gothic'; 
+    font-weight: 200;      
+    font-size: 0.7rem;    
+    letter-spacing: 0.03em; 
+
+}
+
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.text-green-600 {
+  color: #16a34a; /* Tailwind green-600 */
+  font-family: 'Century Gothic';
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+}
+
+.text-red-600 {
+  color: #dc2626; /* Tailwind red-600 */
+  font-family: 'Century Gothic';
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
