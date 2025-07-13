@@ -1,0 +1,153 @@
+
+services:
+
+  user_db:
+    image: mariadb:10.9
+    ports:
+      - "3307:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: root_pass
+      MARIADB_DATABASE: user_db
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: app_pass
+    volumes:
+      - user_db_data:/var/lib/mysql
+
+  user_service:
+    build:
+      context: ./user_service
+    env_file:
+      - ./user_service/.env
+    ports:
+      - "8001:8001"
+    depends_on:
+      - user_db
+
+  institution_db:
+    image: mariadb:10.9
+    ports:
+      - "3308:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: root_pass
+      MARIADB_DATABASE: institution_db
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: app_pass
+    volumes:
+      - institution_db_data:/var/lib/mysql
+
+  institution_service:
+    build:
+      context: ./institution_service
+    env_file:
+      - ./institution_service/.env
+    ports:
+      - "8002:8002"
+    depends_on:
+      - institution_db
+
+  credit_db:
+    image: mariadb:10.9
+    ports:
+      - "3309:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: root_pass
+      MARIADB_DATABASE: credit_db
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: app_pass
+    volumes:
+      - credit_db_data:/var/lib/mysql
+
+  credit_service:
+    build:
+      context: ./credit_service
+    env_file:
+      - ./credit_service/.env
+    ports:
+      - "8003:8003"
+    depends_on:
+      - credit_db
+      - institution_service
+
+  grading_db:
+    image: mariadb:10.9
+    ports:
+      - "3310:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: root_pass
+      MARIADB_DATABASE: grading_db
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: app_pass
+    volumes:
+      - grading_db_data:/var/lib/mysql
+
+  grading_service:
+    build:
+      context: ./grading_service
+    env_file:
+      - ./grading_service/.env
+    ports:
+      - "8004:8004"
+    depends_on:
+      - grading_db
+
+  review_db:
+    image: mariadb:10.9
+    ports:
+      - "3311:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: root_pass
+      MARIADB_DATABASE: review_db
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: app_pass
+    volumes:
+      - review_db_data:/var/lib/mysql
+
+
+  review_service:
+    build:
+      context: ./review_service
+    env_file:
+      - ./review_service/.env
+    ports:
+      - "8005:8005"
+    depends_on:
+      - review_db
+
+  # --------------------
+  # API Gateway
+  # --------------------
+
+  api_gateway:
+    build:
+      context: ./api_gateway
+    env_file:
+      - ./api_gateway/.env
+    ports:
+      - "8080:8080"
+    depends_on:
+      - user_service
+      - institution_service
+      - credit_service
+      - grading_service
+      - review_service
+
+  # --------------------
+  # Frontend
+  # --------------------
+
+  frontend:
+    build: ./frontend
+    env_file:
+      - ./frontend/.env
+    ports:
+      - "5173:80"
+    depends_on:
+      - api_gateway
+
+
+volumes:
+  user_db_data:
+  institution_db_data:
+  credit_db_data:
+  grading_db_data:
+  review_db_data:
